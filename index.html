@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>隨機數字遊戲</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 3em;
+        }
+
+        p {
+            font-size: 1.2em;
+        }
+
+        #generateButton {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #generateButton:hover {
+            background-color: #45a049;
+        }
+
+        #randomNumber {
+            font-size: 2em;
+            font-weight: bold;
+            color: #FF5722;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 1em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>隨機數字遊戲</h1>
+    <p>點擊下面的按鈕來生成隨機數字！</p>
+    <button id="generateButton">生成數字</button>
+    <p>當前隨機數字是：<span id="randomNumber">0</span></p>
+
+    <script src="randomNumberGame.js"></script>
+</body>
+</html>
 
