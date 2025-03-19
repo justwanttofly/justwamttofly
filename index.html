@@ -1,74 +1,12 @@
-import pygame
-import sys
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>我的遊戲網站</title>
+</head>
+<body>
+    <h1>歡迎來到我的遊戲網站！</h1>
+    <p>這裡將展示我用 GitHub Copilot 製作的迷你遊戲。</p>
+</body>
+</html>
 
-# 初始化 pygame
-pygame.init()
-
-# 視窗設定
-WIDTH, HEIGHT = 600, 400
-CELL_SIZE = 40
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("小迷宮遊戲")
-
-# 顏色設定
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
-
-# 迷宮地圖 (1=牆壁, 0=路, 2=終點)
-maze = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 2, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-]
-
-# 玩家位置
-player_x, player_y = 1, 1
-
-def draw_maze():
-    for row in range(len(maze)):
-        for col in range(len(maze[row])):
-            color = WHITE if maze[row][col] == 0 else BLACK
-            if maze[row][col] == 2:
-                color = GREEN  # 終點顯示為綠色
-            pygame.draw.rect(screen, color, (col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-
-# 遊戲主迴圈
-running = True
-while running:
-    screen.fill(WHITE)
-    draw_maze()
-
-    # 畫出玩家
-    pygame.draw.rect(screen, RED, (player_x * CELL_SIZE, player_y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    # 玩家移動控制
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP] and maze[player_y - 1][player_x] != 1:
-        player_y -= 1
-    if keys[pygame.K_DOWN] and maze[player_y + 1][player_x] != 1:
-        player_y += 1
-    if keys[pygame.K_LEFT] and maze[player_y][player_x - 1] != 1:
-        player_x -= 1
-    if keys[pygame.K_RIGHT] and maze[player_y][player_x + 1] != 1:
-        player_x += 1
-
-    # 判斷是否到達終點
-    if maze[player_y][player_x] == 2:
-        print("恭喜通關！")
-        running = False
-
-    pygame.display.flip()
-    pygame.time.delay(100)
-
-pygame.quit()
-sys.exit()
