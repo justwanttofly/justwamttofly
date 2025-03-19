@@ -1,0 +1,9 @@
+// 獲取按鈕和顯示區域
+const generateButton = document.getElementById("generateButton");
+const randomNumberElement = document.getElementById("randomNumber");
+
+// 當按鈕被點擊時，生成一個新的隨機數字
+generateButton.addEventListener("click", function() {
+    const randomNum = Math.floor(Math.random() * 100) + 1; // 生成 1 到 100 之間的隨機數字
+    randomNumberElement.textContent = randomNum; // 更新顯示的數字
+});
