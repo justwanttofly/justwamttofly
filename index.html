@@ -1,24 +1,48 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>簡單範例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遊戲網站首頁</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1>歡迎來到我的網站！</h1>
-    <button id="clickButton">點擊我！</button>
-    <p>分數是：<span id="score">0</span></p>
+    <h1>歡迎來到遊戲網站！</h1>
+    <p>選擇您想玩的遊戲：</p>
+    
+    <button class="button" onclick="window.location.href='game1.html'">遊戲 1</button>
+    <button class="button" onclick="window.location.href='game2.html'">遊戲 2</button>
+    <button class="button" onclick="window.location.href='game3.html'">遊戲 3</button>
 
-    <script>
-        // JavaScript 代碼
-        const clickButton = document.getElementById('clickButton');
-        const scoreElement = document.getElementById('score');
-        let score = 0;
-
-        clickButton.addEventListener('click', function() {
-            score++;
-            scoreElement.textContent = score;
-        });
-    </script>
+    <footer>
+        <p>© 2025 遊戲網站 - 所有權利保留</p>
+    </footer>
 </body>
 </html>
+
