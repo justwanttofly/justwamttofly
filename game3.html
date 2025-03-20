@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小雞收集大便遊戲</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f8ff;
+            margin: 0;
+        }
+
+        canvas {
+            border: 2px solid #333;
+            background-color: #e0f7fa;
+        }
+
+        .score {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🐥 小雞收集大便 💩</h1>
+    <div class="score" id="score">分數：0</div>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const chicken = {
+            x: 200,
+            y: 350,
+            width: 40,
+            height: 40,
+            speed: 5
+        };
+
+        const poop = {
+            x: Math.random() * 360,
+            y: 0,
+            width: 30,
+            height: 30,
+            speed: 3
+        };
+
+        let score = 0;
+
+        function drawChicken() {
+            ctx.fillStyle = '#FFD700';
+            ctx.fillRect(chicken.x, chicken.y, chicken.width, chicken.height);
+        }
+
+        function drawPoop() {
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(poop.x, poop.y, poop.width, poop.height);
+        }
+
+        function movePoop() {
+            poop.y += poop.speed;
+            if (poop.y > canvas.height) {
+                poop.y = 0;
+                poop.x = Math.random() * 360;
+            }
+        }
+
+        function checkCollision() {
+            if (
+                chicken.x < poop.x + poop.width &&
+                chicken.x + chicken.width > poop.x &&
+                chicken.y < poop.y + poop.height &&
+                chicken.y + chicken.height > poop.y
+            ) {
+                score++;
+                document.getElementById('score').textContent = `分數：${score}`;
+                poop.y = 0;
+                poop.x = Math.random() * 360;
+            }
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawChicken();
+            drawPoop();
+
+            movePoop();
+            checkCollision();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft' && chicken.x > 0) {
+                chicken.x -= chicken.speed;
+            } else if (e.key === 'ArrowRight' && chicken.x < canvas.width - chicken.width) {
+                chicken.x += chicken.speed;
+            }
+        });
+
+        gameLoop();
+    </script>
+</body>
+</html>
