@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="歡迎來到遊戲網站，選擇您想玩的遊戲。">
-    <meta name="keywords" content="遊戲, 網站, 遊戲1, 遊戲2, 遊戲3">
-    <meta name="author" content="Your Name">
-    <title>遊戲網站首頁</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>簡單範例</title>
 </head>
 <body>
-    <header>
-        <h1>歡迎來到遊戲網站！</h1>
-    </header>
-    <main>
-        <p>選擇您想玩的遊戲：</p>
-        <button ▋
+    <h1>歡迎來到我的網站！</h1>
+    <button id="clickButton">點擊我！</button>
+    <p>分數是：<span id="score">0</span></p>
+
+    <script>
+        // JavaScript 代碼
+        const clickButton = document.getElementById('clickButton');
+        const scoreElement = document.getElementById('score');
+        let score = 0;
+
+        clickButton.addEventListener('click', function() {
+            score++;
+            scoreElement.textContent = score;
+        });
+    </script>
+</body>
+</html>
