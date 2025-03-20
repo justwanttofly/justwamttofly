@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遊戲 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffebcd;
+            text-align: center;
+            padding: 50px;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>遊戲 1 - 反應力測試</h1>
+    <p>點擊圓形，看看你的反應速度有多快！</p>
+    
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let circleX, circleY, startTime;
+
+        function drawCircle() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除畫布
+            circleX = Math.random() * (canvas.width - 50) + 25;
+            circleY = Math.random() * (canvas.height - 50) + 25;
+
+            ctx.beginPath();
+            ctx.arc(circleX, circleY, 25, 0, Math.PI * 2);
+            ctx.fillStyle = '#4CAF50';
+            ctx.fill();
+
+            startTime = new Date().getTime(); // 記錄開始時間
+        }
+
+        canvas.addEventListener('click', function (event) {
+            const clickX = event.clientX - canvas.getBoundingClientRect().left;
+            const clickY = event.clientY - canvas.getBoundingClientRect().top;
+
+            const distance = Math.sqrt(Math.pow(clickX - circleX, 2) + Math.pow(clickY - circleY, 2));
+
+            if (distance <= 25) {
+                const reactionTime = (new Date().getTime()) - startTime;
+                alert(`你成功點擊到了！反應時間：${reactionTime} 毫秒`);
+                drawCircle(); // 重新繪製圓形
+            }
+        });
+
+        // 遊戲開始
+        drawCircle();
+    </script>
+</body>
+</html>
