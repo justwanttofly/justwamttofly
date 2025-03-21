@@ -18,7 +18,13 @@
             color: #333;
             margin-top: 20px;
         }
-        
+
+        #game-info {
+            text-align: center;
+            color: #333;
+            font-size: 20px;
+        }
+
         #game-container {
             position: relative;
             width: 800px;
@@ -86,6 +92,11 @@
 <body>
 
     <h1>跑酷遊戲</h1>
+    <div id="game-info">
+        <p>倒數計時: <span id="countdown">30</span> 秒</p>
+        <p>分數: <span id="score">0</span></p>
+    </div>
+
     <div id="game-container">
         <div id="player"></div>
         <div id="ground"></div>
@@ -97,8 +108,13 @@
     <script>
         const player = document.getElementById('player');
         const obstacle = document.getElementById('obstacle');
+        const countdownElement = document.getElementById('countdown');
+        const scoreElement = document.getElementById('score');
 
         let isJumping = false;
+        let score = 0;
+        let countdown = 30;
+        let gameInterval;
 
         // 控制跳躍
         document.addEventListener('keydown', function(event) {
@@ -153,22 +169,39 @@
         function resetGame() {
             player.style.bottom = '50px';
             obstacle.style.right = '-50px';
+            score = 0;
+            scoreElement.textContent = score;
+            countdown = 30;
+            countdownElement.textContent = countdown;
+            clearInterval(gameInterval);
+            startGame();
+        }
+
+        // 開始遊戲
+        function startGame() {
+            gameInterval = setInterval(function() {
+                countdown--;
+                countdownElement.textContent = countdown;
+                if (countdown === 0) {
+                    alert('時間到，遊戲結束！');
+                    resetGame();
+                }
+            }, 1000);
+
+            gameLoop();
         }
 
         // 遊戲主循環
         function gameLoop() {
             checkCollision();
+            score++;
+            scoreElement.textContent = score;
             requestAnimationFrame(gameLoop);
         }
 
-        gameLoop();
+        // 開始遊戲
+        startGame();
     </script>
 
-</body>
-</html>
-
-        // 遊戲開始
-        drawCircle();
-    </script>
 </body>
 </html>
