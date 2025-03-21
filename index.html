@@ -18,75 +18,68 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative; /* 讓 ::before 偽元素能正確定位 */
-            
+
+            /* ✅ 正確放置 position: relative; */
+            position: relative; 
         }
 
-   
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: -1;
+        }
 
-body::before {
-    content: ""; /* 必須加上 content 才能顯示偽元素 */
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+        .navbar {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            width: 50%;
+        }
 
-    /* 半透明遮罩，讓背景變淡 */
-    background-color: rgba(255, 255, 255, 0.5); 
+        .navbar a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-    /* 確保遮罩層在背景圖片上、其他內容下 */
-    z-index: -1;
-}
+        .navbar a:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
 
-        /* 整理框樣式 */
-.navbar {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.7); /* 半透明背景 */
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 輕微陰影 */
-    display: flex;
-    justify-content: space-around;
-    width: 50%; /* 可調整整理框寬度 */
-}
-
-.navbar a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    padding: 8px 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.navbar a:hover {
-    background-color: #4CAF50;
-    color: white;
-}
-
-        /* 新增的部分: header 元素樣式 */
         header {
-            position: absolute; /* 使 header 元素固定在頁面左上角 */
-            top: 20px; /* 距離頁面上方 20px */
-            left: 20px; /* 距離頁面左邊 20px */
-            display: flex; /* 使用 flex 排版 */
-            align-items: center; /* 使 LOGO 和網站名稱垂直對齊 */
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
         }
 
         header img {
-            width: 50px; /* 調整 LOGO 大小 */
-            height: auto; /* 高度自動縮放 */
-            margin-right: 10px; /* LOGO 和網站名稱之間的間隔 */
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
         }
 
         header h1 {
-            color: #333; /* 設定網站名稱的顏色 */
-            font-size: 24px; /* 設定網站名稱的字體大小 */
-            margin: 0; /* 移除 h1 元素的外邊距 */
+            color: #333;
+            font-size: 24px;
+            margin: 0;
         }
 
         h1 {
@@ -123,14 +116,12 @@ body::before {
 </head>
 <body>
 
-    <!-- 新增的整理框部分 -->
-<div class="navbar">
-    <a href="#home">首頁</a>
-    <a href="#about">關於我們</a>
-    <a href="#contact">聯繫我們</a>
-</div>
+    <div class="navbar">
+        <a href="#home">首頁</a>
+        <a href="#about">關於我們</a>
+        <a href="#contact">聯繫我們</a>
+    </div>
 
-    <!-- 新增的 header 部分 -->
     <header>
         <img src="images/owl.ico" alt="Logo">
         <h1>グルグルの世界</h1>
@@ -138,16 +129,17 @@ body::before {
 
     <h1>歡迎來到遊戲網站！</h1>
     <p>選擇您想玩的遊戲：</p>
-    
+
     <button class="button" onclick="window.location.href='game1.html'">遊戲 1</button>
     <button class="button" onclick="window.location.href='game2.html'">遊戲 2</button>
     <button class="button" onclick="window.location.href='game3.html'">遊戲 3</button>
-    <button class="button" onclick="window.location.href='game3.html'">遊戲 4</button>
-    
+    <button class="button" onclick="window.location.href='game4.html'">遊戲 4</button>
+
     <footer>
         <p>© 2025 遊戲網站 - 所有權利保留</p>
     </footer>
 </body>
 </html>
+
 
 
