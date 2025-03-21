@@ -20,6 +20,24 @@
             align-items: center;
         }
 
+    position: relative; /* 讓 ::before 偽元素能正確定位 */
+}
+
+body::before {
+    content: ""; /* 必須加上 content 才能顯示偽元素 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* 半透明遮罩，讓背景變淡 */
+    background-color: rgba(255, 255, 255, 0.5); 
+
+    /* 確保遮罩層在背景圖片上、其他內容下 */
+    z-index: -1;
+}
+
         /* 整理框樣式 */
 .navbar {
     position: absolute;
