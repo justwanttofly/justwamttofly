@@ -18,10 +18,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative; /* 讓 ::before 偽元素能正確定位 */
+            
         }
 
-    position: relative; /* 讓 ::before 偽元素能正確定位 */
-}
+   
 
 body::before {
     content: ""; /* 必須加上 content 才能顯示偽元素 */
