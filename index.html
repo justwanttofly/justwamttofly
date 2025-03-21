@@ -20,6 +20,35 @@
             align-items: center;
         }
 
+        /* 整理框樣式 */
+.navbar {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.7); /* 半透明背景 */
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 輕微陰影 */
+    display: flex;
+    justify-content: space-around;
+    width: 50%; /* 可調整整理框寬度 */
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
         /* 新增的部分: header 元素樣式 */
         header {
             position: absolute; /* 使 header 元素固定在頁面左上角 */
@@ -74,6 +103,14 @@
     </style>
 </head>
 <body>
+
+    <!-- 新增的整理框部分 -->
+<div class="navbar">
+    <a href="#home">首頁</a>
+    <a href="#about">關於我們</a>
+    <a href="#contact">聯繫我們</a>
+</div>
+
     <!-- 新增的 header 部分 -->
     <header>
         <img src="images/owl.ico" alt="Logo">
