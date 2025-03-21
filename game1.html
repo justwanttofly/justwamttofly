@@ -3,25 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>遊戲 1</title>
+    <title>遊戲 1 - 跑酷遊戲</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #ffebcd;
-            text-align: center;
-            padding: 50px;
+            background-color: #87CEEB;
+            margin: 0;
+            padding: 0;
         }
-        canvas {
-            border: 2px solid #333;
-            background-color: #fff;
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        
+        #game-container {
+            position: relative;
+            width: 800px;
+            height: 400px;
+            margin: 20px auto;
+            background-color: #f0f0f0;
+            border: 2px solid black;
+            overflow: hidden;
+        }
+
+        #player {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            width: 50px;
+            height: 50px;
+            background-color: #FF6347;
+        }
+
+        #ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20px;
+            background-color: #228B22;
+        }
+
+        #obstacle {
+            position: absolute;
+            bottom: 50px;
+            right: -50px;
+            width: 50px;
+            height: 50px;
+            background-color: #8B0000;
+            animation: moveObstacle 3s linear infinite;
+        }
+
+        @keyframes moveObstacle {
+            0% {
+                right: -50px;
+            }
+            100% {
+                right: 850px;
+            }
+        }
+
+        .button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>遊戲 1 - 反應力測試</h1>
-    <p>點擊圓形，看看你的反應速度有多快！</p>
+
+    <h1>跑酷遊戲</h1>
+    <div id="game-container">
+        <div id="player"></div>
+        <div id="ground"></div>
+        <div id="obstacle"></div>
+    </div>
     
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <button class="button" onclick="window.location.href='index.html'">返回首頁</button>
+    
+    <script>
+        const player = document.getElementById('player');
+        const obstacle = document.getElementById('obstacle');
+
+        let isJumping = false;
+
+        // 控制跳躍
+        document.addEventListener('keydown', function(event) {
+            if (event.key === ' ' && !isJumping) {
+                isJumping = true;
+                jump();
+            }
+        });
+
+        function jump() {
+            let jumpHeight = 0;
+            const jumpInterval = setInterval(function() {
+                if (jumpHeight < 150) {
+                    jumpHeight += 10;
+                    player.style.bottom = 50 + jumpHeight + 'px';
+                } else {
+                    clearInterval(jumpInterval);
+                    fall();
+                }
+            }, 20);
+        }
+
+        function fall() {
+            let fallHeight = 150;
+            const fallInterval = setInterval(function() {
+                if (fallHeight > 0) {
+                    fallHeight -= 10;
+                    player.style.bottom = 50 + fallHeight + 'px';
+                } else {
+                    clearInterval(fallInterval);
+                    isJumping = false;
+                }
+            }, 20);
+        }
+
+        // 撞擊檢測
+        function checkCollision() {
+            const playerRect = player.getBoundingClientRect();
+            const obstacleRect = obstacle.getBoundingClientRect();
+
+            if (
+                playerRect.left < obstacleRect.right &&
+                playerRect.right > obstacleRect.left &&
+                playerRect.top < obstacleRect.bottom &&
+                playerRect.bottom > obstacleRect.top
+            ) {
+                alert('遊戲結束！');
+                resetGame();
+            }
+        }
+
+        function resetGame() {
+            player.style.bottom = '50px';
+            obstacle.style.right = '-50px';
+        }
+
+        // 遊戲主循環
+        function gameLoop() {
+            checkCollision();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+
+</body>
+</html>
+
 
     <script>
         const canvas = document.getElementById('gameCanvas');
