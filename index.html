@@ -139,6 +139,34 @@
         .button:hover {
             background-color: #45a049;
         }
+          .canva-embed-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            margin-top: 100px;
+            margin-bottom: 50px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
+        }
+
+        .canva-embed-container .aspect-ratio-box {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-top: 56.2225%;
+        }
+
+        .canva-embed-container iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
 
         footer {
             position: absolute;
@@ -171,7 +199,13 @@
             <a href="#contact">聯繫我們</a>
         </div>
     </div>
-
+ <div class="canva-embed-container">
+        <div class="aspect-ratio-box">
+            <iframe loading="lazy" src="https://www.canva.com/design/DAGibJ-kMZs/KKvkycmDfjYDtuV6yx6nbA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+        </div>
+    </div>
+    <a href="https://www.canva.com/design/DAGibJ-kMZs/KKvkycmDfjYDtuV6yx6nbA/view?utm_content=DAGibJ-kMZs&utm_campaign=designshare&utm_medium=embeds&utm_source=link" target="_blank" rel="noopener">設計者</a>
+    <!-- 🔹 新增部分結束 -->
 
     <footer>
         <p>© 2025 遊戲網站 - 所有權利保留</p>
