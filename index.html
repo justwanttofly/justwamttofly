@@ -81,6 +81,40 @@
             background-color: #4CAF50;
             color: white;
         }
+        .dropdown {
+    position: relative;
+    display: inline-block;
+        }
+        .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    border-radius: 8px;
+    top: 100%;
+    left: 0;
+        }
+
+.dropdown-content a {
+    color: #333;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    white-space: nowrap;
+       }
+
+.dropdown-content a:hover {
+    background-color: #4CAF50;
+    color: white;
+       }
+
+.dropdown:hover .dropdown-content {
+    display: block;
+       }
+
 
         .canva-embed-container {
             position: relative;
@@ -145,6 +179,14 @@
         <div class="navbar">
             <a href="#home">首頁</a>
             <a href="#home">遊戲</a>
+             <div class="dropdown">
+                <a href="#games">遊戲</a>
+                <div class="dropdown-content">
+                    <a href="#game1">小雞收集大便</a>
+                    <a href="#game2">圈圈叉叉</a>
+                    <a href="#game3">其他遊戲</a>
+                </div>
+            </div>
             <a href="#home">旅行</a>
             <a href="#about">關於我們</a>
             <a href="#contact">聯繫我們</a>
