@@ -164,8 +164,82 @@
         </div>
     </div>
 
+    <div id="game1">
+        <h2>🐤 小雞收集大便</h2>
+        <canvas id="poopGameCanvas" width="500" height="500"></canvas><br>
+        <button onclick="startGame()">開始遊戲</button>
+        <p id="scoreDisplay">得分：0</p>
+    </div>
+
     <footer>
         <p>© 2025 遊戲網站 - 所有權利保留</p>
     </footer>
+
+    <script>
+  
+        document.querySelector('a[href="#game1"]').addEventListener('click', function () {
+            document.querySelectorAll('div[id^="game"]').forEach(div => div.style.display = 'none');
+            document.getElementById('game1').style.display = 'block';
+        });
+
+        let canvas = document.getElementById('poopGameCanvas');
+        let ctx = canvas.getContext('2d');
+
+        let chicken = { x: 220, y: 450, width: 50, height: 50 };
+        let poop = { x: Math.random() * 450, y: 0, width: 30, height: 30 };
+        let score = 0;
+        let gameInterval;
+
+        function drawChicken() {
+            ctx.fillStyle = 'yellow';
+            ctx.fillRect(chicken.x, chicken.y, chicken.width, chicken.height);
+        }
+
+        function drawPoop() {
+            ctx.fillStyle = 'brown';
+            ctx.fillRect(poop.x, poop.y, poop.width, poop.height);
+        }
+
+        function updateGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawChicken();
+            drawPoop();
+
+            poop.y += 5;
+            if (poop.y > 500) {
+                poop.y = 0;
+                poop.x = Math.random() * 450;
+            }
+
+            // 判斷是否接到
+            if (poop.y + poop.height > chicken.y &&
+                poop.x < chicken.x + chicken.width &&
+                poop.x + poop.width > chicken.x) {
+                score++;
+                document.getElementById('scoreDisplay').innerText = '得分：' + score;
+                poop.y = 0;
+                poop.x = Math.random() * 450;
+            }
+        }
+
+        function startGame() {
+            score = 0;
+            poop.y = 0;
+            poop.x = Math.random() * 450;
+            document.getElementById('scoreDisplay').innerText = '得分：0';
+            clearInterval(gameInterval);
+            gameInterval = setInterval(updateGame, 30);
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft' && chicken.x > 0) {
+                chicken.x -= 20;
+            }
+            if (e.key === 'ArrowRight' && chicken.x < 450) {
+                chicken.x += 20;
+            }
+        });
+    </script>
+    
 </body>
 </html>
