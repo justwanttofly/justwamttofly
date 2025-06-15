@@ -141,6 +141,13 @@
             color: #fff;
             padding-bottom: 20px;
         }
+
+        #game1 {
+    display: none;
+    margin-top: 150px;
+    text-align: center;
+}
+
     </style>
 </head>
 <body>
@@ -177,10 +184,13 @@
 
     <script>
   
-        document.querySelector('a[href="#game1"]').addEventListener('click', function () {
-            document.querySelectorAll('div[id^="game"]').forEach(div => div.style.display = 'none');
-            document.getElementById('game1').style.display = 'block';
-        });
+        document.addEventListener('click', function (e) {
+    if (e.target.matches('a[href="#game1"]')) {
+        document.querySelectorAll('div[id^="game"]').forEach(div => div.style.display = 'none');
+        document.getElementById('game1').style.display = 'block';
+    }
+});
+
 
         let canvas = document.getElementById('poopGameCanvas');
         let ctx = canvas.getContext('2d');
