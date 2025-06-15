@@ -171,7 +171,12 @@
         </div>
     </div>
 
-    <div id="game1">
+    <div id="home" class="section"><h2>🏠 歡迎來到首頁</h2></div>
+    <div id="travel" class="section"><h2>✈️ 旅行冒險紀錄</h2></div>
+    <div id="about" class="section"><h2>👤 我們是誰？</h2></div>
+    <div id="contact" class="section"><h2>📩 聯繫方式在這裡</h2></div>
+
+    <div id="game1" class="section">
         <h2>🐤 小雞收集大便</h2>
         <canvas id="poopGameCanvas" width="500" height="500"></canvas><br>
         <button onclick="startGame()">開始遊戲</button>
@@ -183,23 +188,33 @@
     </footer>
 
     <script>
-  
-        document.addEventListener('click', function (e) {
-    if (e.target.matches('a[href="#game1"]')) {
-        document.querySelectorAll('div[id^="game"]').forEach(div => div.style.display = 'none');
-        document.getElementById('game1').style.display = 'block';
-    }
-});
-
-
+        // 遊戲控制變數
         let canvas = document.getElementById('poopGameCanvas');
         let ctx = canvas.getContext('2d');
-
         let chicken = { x: 220, y: 450, width: 50, height: 50 };
         let poop = { x: Math.random() * 450, y: 0, width: 30, height: 30 };
         let score = 0;
         let gameInterval;
 
+        // 顯示指定區塊，其他區塊隱藏
+        function showSection(sectionId) {
+            const sections = ['home', 'travel', 'about', 'contact', 'game1'];
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = (id === sectionId) ? 'block' : 'none';
+            });
+        }
+
+        // 點擊導覽列連結，切換區塊
+        document.querySelectorAll('.navbar a, .dropdown-content a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                showSection(targetId);
+            });
+        });
+
+        // 遊戲開始與更新邏輯
         function drawChicken() {
             ctx.fillStyle = 'yellow';
             ctx.fillRect(chicken.x, chicken.y, chicken.width, chicken.height);
@@ -221,7 +236,6 @@
                 poop.x = Math.random() * 450;
             }
 
-            // 判斷是否接到
             if (poop.y + poop.height > chicken.y &&
                 poop.x < chicken.x + chicken.width &&
                 poop.x + poop.width > chicken.x) {
@@ -241,6 +255,7 @@
             gameInterval = setInterval(updateGame, 30);
         }
 
+        // 鍵盤左右移動小雞
         document.addEventListener('keydown', function (e) {
             if (e.key === 'ArrowLeft' && chicken.x > 0) {
                 chicken.x -= 20;
@@ -249,6 +264,9 @@
                 chicken.x += 20;
             }
         });
+
+        // 預設顯示首頁
+        showSection('home');
     </script>
     
 </body>
