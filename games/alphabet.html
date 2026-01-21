@@ -42,7 +42,9 @@
         <!-- 遊戲資訊 -->
         <div class="flex justify-between items-center mb-6 text-lg font-medium text-gray-600">
             <span>得分: <span id="score" class="text-blue-600 font-extrabold">0</span></span>
+            <span>時間: <span id="time" class="text-purple-600 font-extrabold">60</span>s</span>
             <span>最高分: <span id="high-score" class="text-red-500 font-extrabold">0</span></span>
+            
         </div>
 
         <!-- 目標字母顯示區 -->
@@ -78,6 +80,9 @@
         let highScore = localStorage.getItem('alphabetHighScore') ? parseInt(localStorage.getItem('alphabetHighScore')) : 0;
         let targetLetter = '';
         let isPlaying = false;
+        let timeLeft = 60;       // 剩餘時間（秒）
+        let timerId = null;     // 計時器 ID
+
 
         // DOM 元素
         const targetLetterDisplay = document.querySelector('#target-letter span');
@@ -87,12 +92,16 @@
         const startButton = document.getElementById('start-button');
         const resetButton = document.getElementById('reset-button');
         const targetLetterContainer = document.getElementById('target-letter');
+        const timeElement = document.getElementById('time');
+
 
         // 更新 UI
         function updateUI() {
             scoreElement.textContent = score;
             highScoreElement.textContent = highScore;
             targetLetterDisplay.textContent = targetLetter;
+            timeElement.textContent = timeLeft;
+
             
             // 根據遊戲狀態更新開始按鈕文字
             startButton.textContent = isPlaying ? '遊戲中...' : '開始遊戲';
@@ -165,7 +174,7 @@
                 } else {
                     // 錯誤
                     displayFeedback(`錯誤！您按下了 ${pressedKey}，應為 ${targetLetter}`, 'incorrect');
-                    score = 0; // 錯誤重置分數
+                   
                     // 不重新選擇字母，讓使用者有機會看到正確的字母
                     setTimeout(() => updateUI(), 300); // 確保在清除反饋後更新分數
                 }
@@ -197,7 +206,37 @@
                 updateUI();
                 displayFeedback('最高分已重設為 0', 'info');
             }
+        
         }
+
+        function startGame() {
+    if (isPlaying) return;
+
+    isPlaying = true;
+    score = 0;
+    timeLeft = 30;   // ← 每次重新開始倒數
+    clearInterval(timerId);
+
+    targetLetterContainer.classList.remove('bg-gray-500');
+    targetLetterContainer.classList.add('bg-indigo-500');
+
+    displayFeedback('開始！請在時間內輸入字母！', 'info');
+    pickNewLetter();
+    updateUI();
+    startTimer();    // ← 啟動倒數
+}
+
+function endGame() {
+    isPlaying = false;
+    clearInterval(timerId);
+    timerId = null;
+
+    targetLetterContainer.classList.remove('bg-indigo-500');
+    targetLetterContainer.classList.add('bg-gray-500');
+
+    displayFeedback(`時間到！最終得分：${score}`, 'info');
+    updateUI();
+}
 
         // 初始化設定
         window.onload = function() {
@@ -217,3 +256,4 @@
 
 </body>
 </html>
+
