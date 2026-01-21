@@ -183,18 +183,6 @@
             event.preventDefault(); 
         }
 
-        // 開始遊戲
-        function startGame() {
-            if (isPlaying) return;
-
-            isPlaying = true;
-            score = 0;
-            targetLetterContainer.classList.remove('bg-gray-500'); // 移除初始的灰色背景
-            targetLetterContainer.classList.add('bg-indigo-500'); // 設置遊戲中的背景
-            displayFeedback('開始！請按下字母鍵...', 'info');
-            pickNewLetter(); // 選擇第一個字母
-            updateUI();
-        }
 
         // 重設最高分
         function resetHighScore() {
@@ -214,7 +202,7 @@
 
     isPlaying = true;
     score = 0;
-    timeLeft = 30;   // ← 每次重新開始倒數
+    timeLeft = 60;   // ← 每次重新開始倒數
     clearInterval(timerId);
 
     targetLetterContainer.classList.remove('bg-gray-500');
@@ -237,6 +225,17 @@ function endGame() {
     displayFeedback(`時間到！最終得分：${score}`, 'info');
     updateUI();
 }
+        function startTimer() {
+    timerId = setInterval(() => {
+        timeLeft--;
+        updateUI();
+
+        if (timeLeft <= 0) {
+            endGame();
+        }
+    }, 1000);
+}
+
 
         // 初始化設定
         window.onload = function() {
@@ -256,4 +255,5 @@ function endGame() {
 
 </body>
 </html>
+
 
