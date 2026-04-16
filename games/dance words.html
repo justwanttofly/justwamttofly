@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動弦樂器</title>
+    <style>
+        /* 這裡放 CSS 樣式 */
+        body {
+            height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            background: lightblue;
+        }
+
+        #strings {
+            font-size: 6rem;
+            margin: auto;
+            /* 修正：確保動畫名稱與下方定義一致 */
+            animation: bounce 2s infinite;
+            cursor: pointer; /* 讓使用者知道可以互動 */
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+
+    <p id="strings">🪉🎻🎸🪕</p>
+
+    <script>
+        // 這裡放 JavaScript 邏輯
+        const paragraph = document.getElementById("strings");
+        const originalText = paragraph.textContent;
+        const hoverText = "Eat Shit!";
+
+        paragraph.addEventListener("mouseenter", () => {
+            paragraph.textContent = hoverText;
+        });
+
+        paragraph.addEventListener("mouseleave", () => {
+            paragraph.textContent = originalText;
+        });
+    </script>
+</body>
+</html>
