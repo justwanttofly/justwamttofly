@@ -3,50 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>互動弦樂器</title>
+    <title>生日卡片</title>
+    <div id="container">
+  <p id="strings">🎂</p>
+  
+  <div id="letter" class="hidden">
+    <div class="envelope">
+      <div class="content">
+        <h3>給你的信 ✉️</h3>
+        <p>欸!   這次用 AI  寫了程式當卡片，屌吧。上大學後，我們好像又更少交流了，彼此都有各自的事業要忙，之間距離也更加遙遠，就比較難像從前那樣還能偶爾去圖書館念書或去「我們在鋆庭那邊的家」閒聊，也不知道未來會怎樣</p>
+				<button id="game-btn">進入遊戲 🎮</button>
+      </div>
+    </div>
+  </div>
+</div>
     <style>
         /* 這裡放 CSS 樣式 */
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@552&display=swap');
-        body {
-            height: 100vh;
-            margin: 0;
-            display: grid;
-            place-items: center;
-            background: lightblue;
-        }
+      @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@552&display=swap");
 
-        #strings {
-            font-family: "caveat", sans-serif;
-            font-size: 6rem;
-            margin: auto;
-            /* 修正：確保動畫名稱與下方定義一致 */
-            animation: bounce 2s infinite;
-            cursor: pointer; /* 讓使用者知道可以互動 */
-        }
+body {
+	height: 100vh;
+	margin: 0;
+	display: grid;
+	place-items: center;
+	background: #f0f8ff; /* 輕柔的藍 */
+	font-family: "Caveat", sans-serif;
+}
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
+#strings {
+	font-size: 6rem;
+	cursor: pointer;
+	animation: bounce 2s infinite ease-in-out;
+	transition: transform 0.3s;
+}
+
+#strings:hover {
+	transform: scale(1.1); /* 懸停時稍微放大 */
+}
+
+/* 信封樣式 */
+#letter {
+	background: white;
+	padding: 100px;
+	border-radius: 10px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+	max-width: 300px;
+	text-align: center;
+	border: 2px solid #ddd;
+}
+
+.hidden {
+	display: none !important;
+}
+
+#game-btn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  font-family: "Caveat", sans-serif;
+  font-size: 1.5rem;
+  background-color: #ffb6c1; /* 粉紅色，很適合生日 */
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#game-btn:hover {
+  background-color: #ff99aa;
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+#game-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes bounce {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-30px);
+	}
+}
     </style>
 </head>
 <body>
 
-    <p id="strings">🪉🎻🎸🪕</p>
+    <p id="strings">🎂</p>
 
     <script>
         // 這裡放 JavaScript 邏輯
         const paragraph = document.getElementById("strings");
-        const originalText = paragraph.textContent;
-        const hoverText = "Eat Shit!";
+const letter = document.getElementById("letter");
+const originalText = "🎂";
+const hoverText = "Click it!"; // 建議改成比較溫馨的字眼 😉
 
-        paragraph.addEventListener("mouseenter", () => {
-            paragraph.textContent = hoverText;
-        });
+// 1. 懸停效果
+paragraph.addEventListener("mouseenter", () => {
+  paragraph.textContent = hoverText;
+});
 
-        paragraph.addEventListener("mouseleave", () => {
-            paragraph.textContent = originalText;
-        });
+paragraph.addEventListener("mouseleave", () => {
+  paragraph.textContent = originalText;
+});
+
+// 2. 點擊進入閱讀信封
+paragraph.addEventListener("click", () => {
+  // 隱藏原本的文字
+  paragraph.classList.add("hidden");
+  // 顯示信封
+  letter.classList.remove("hidden");
+});
+
     </script>
 </body>
 </html>
