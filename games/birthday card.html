@@ -99,26 +99,30 @@ body {
         // 這裡放 JavaScript 邏輯
         const paragraph = document.getElementById("strings");
 const letter = document.getElementById("letter");
+const gameBtn = document.getElementById("game-btn"); // 取得遊戲按鈕
+
 const originalText = "🎂";
 const hoverText = "Click it!"; 
 
 // 1. 懸停效果
 paragraph.addEventListener("mouseenter", () => {
-  paragraph.textContent = hoverText;
+    paragraph.textContent = hoverText;
 });
 
 paragraph.addEventListener("mouseleave", () => {
-  paragraph.textContent = originalText;
+    paragraph.textContent = originalText;
 });
 
 // 2. 點擊進入閱讀信封
 paragraph.addEventListener("click", () => {
-  // 隱藏原本的文字
-  paragraph.classList.add("hidden");
-  // 顯示信封
-  letter.classList.remove("hidden");
+    paragraph.classList.add("hidden");
+    letter.classList.remove("hidden");
 });
 
-    </script>
+// 3. 點擊「進入遊戲」按鈕跳轉
+gameBtn.addEventListener("click", () => {
+    // 💡 記得把 'game.html' 改成你那個偵探遊戲的檔名喔！
+    window.location.href = "games/puzzle_secretwords.html"; 
+});
 </body>
 </html>
