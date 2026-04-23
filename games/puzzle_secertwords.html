@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>偵探解謎：密碼就在圖中</title>
+    <style>
+        /* 基本設定 */
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #34495e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 400px;
+        }
+
+        /* 圖片樣式 */
+        .image-box img {
+            width: 100%;
+            border-radius: 10px;
+            border: 3px solid #f1c40f;
+            margin-bottom: 15px;
+        }
+
+        /* 提示與輸入區 */
+        .hint-section {
+            margin-bottom: 20px;
+        }
+
+        #show-hint-btn {
+            background: #95a5a6;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .hidden-hint {
+            display: none;
+            color: #f1c40f;
+            margin-top: 10px;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            width: 60%;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background: #27ae60;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #2ecc71;
+        }
+
+        /* 狀態顯示 */
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 1.2em; /* 預留空間防止跳動 */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #secretContent {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1c40f;
+            color: #2c3e50;
+            border-radius: 10px;
+        }
+
+        #nextLevelBtn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #2c3e50;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* 震動動畫 */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.2s ease-in-out 0s 2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🔍 偵探解謎：密碼就在圖中</h2>
+    <p>觀察下方的圖片，找出隱藏的句子：</p>
+
+    <div class="image-box">
+        <img src="https://i.postimg.cc/3RpPcKXL/ying-mu-xie-qu-hua-mian-2026-04-22-191324.png" alt="Puzzle Image">
+    </div>
+
+    <div class="hint-section">
+        <button id="show-hint-btn" onclick="toggleHint()">顯示提示</button>
+        <p id="hintText" class="hidden-hint">提示：求我啊</p>
+    </div>
+
+    <div class="input-section">
+        <input type="text" id="passwordInput" placeholder="請輸入密碼..." maxlength="8">
+        <button class="submit-btn" onclick="checkPassword()">解鎖</button>
+    </div>
+
+    <p id="message"></p>
+
+    <div id="secretContent" class="hidden">
+        <h3>🎉 恭喜闖關成功！</h3>
+        <button id="nextLevelBtn" onclick="goToNextLevel()">
+            進入下一關 ➔
+        </button>
+    </div>
+</div>
+
+<script>
+    // 切換提示顯示/隱藏
+    function toggleHint() {
+        const hint = document.getElementById('hintText');
+        const btn = document.getElementById('show-hint-btn');
+
+        if (hint.style.display === "none" || hint.style.display === "") {
+            hint.style.display = "block";
+            btn.innerText = "隱藏提示";
+        } else {
+            hint.style.display = "none";
+            btn.innerText = "顯示提示";
+        }
+    }
+
+    // 密碼檢查邏輯
+    function checkPassword() {
+        const userInput = document.getElementById('passwordInput').value.toUpperCase(); // 轉大寫比對
+        const message = document.getElementById('message');
+        const secretContent = document.getElementById('secretContent');
+        const container = document.querySelector('.container');
+
+        const correctPassword = "JAYISGAY"; 
+
+        if (userInput === correctPassword) {
+            // 成功狀態
+            message.innerText = "✅ 唉喲! 牛逼! 密碼正確！";
+            message.style.color = "#2ecc71";
+            secretContent.classList.remove('hidden');
+        } else {
+            // 失敗狀態
+            message.innerText = "❌ 密碼錯誤，好嫩喔！菜就多練!";
+            message.style.color = "#e74c3c";
+            secretContent.classList.add('hidden');
+            
+            // 觸發震動效果
+            container.classList.add('shake');
+            setTimeout(() => {
+                container.classList.remove('shake');
+            }, 500);
+        }
+    }
+
+    // 進入下一關
+    function goToNextLevel() {
+        const nextUrl = "https://你的下一個關卡網址.com";
+        window.location.href = nextUrl;
+    }
+</script>
+
+</body>
+</html>
