@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第三關：尋找水牛 🐂</title>
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background-color: #2c3e50;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .game-container {
+      background: #34495e;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 950px;
+    }
+
+    .subtitle {
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    /* 遊戲舞台 */
+    #game-stage {
+      position: relative;
+      width: 100%;         /* 寬度填滿外層容器 */
+      max-width: 850px;    /* 限制最大寬度 */
+      aspect-ratio: 3 / 2; /* 鎖定比例（例如 600x400 就是 3:2），高度會自動計算 */
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: crosshair;
+      user-select: none;
+    }
+
+    #bg-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* 🎯 水牛透明點擊區 */
+    #target-zone {
+      position: absolute;
+      
+      /* =================================================== */
+      /*  請調整以下四個數值，來對準你大圖中水牛的實際位置     */
+      top: 18.6%;      
+      left: 77%;     
+      width: 10px;   
+      height: 10px;  
+      /* =================================================== */
+      
+      border-radius: 50%;
+      
+      /* 🛠️ 測試時用半透明紅底，正式上線請改成 transparent */
+      background: transparent; 
+      /* background: rgba(255, 0, 0, 0.4); */
+      
+      transition: transform 0.1s;
+    }
+
+    .hint {
+      color: black;
+      font-size: 0.9rem;
+    }
+
+    /* 彈窗樣式 */
+    #result-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .hidden { display: none !important; }
+
+    .modal {
+      background: #2c3e50;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popUp {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    button {
+      background: #2ed573;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);
+    }
+
+    button:hover { background: #26af5f; }
+  </style>
+</head>
+<body>
+
+  <div class="game-container">
+    <h2>🎂 第三關：尋找水牛 🐂</h2>
+    <p class="subtitle">點擊藏在畫面裡、威利風格的大便色水牛</p>
+
+    <!-- 遊戲主舞台 -->
+    <div id="game-stage">
+      <!-- 替換成你設計的「水牛偽裝大圖」網址 -->
+      <img src="https://i.postimg.cc/SNhfK9LD/jie-pou-xue.png" alt="水牛在哪裡" id="bg-image">
+
+      <!-- 覆蓋在水牛身上的透明點擊區 (可自由調整位置與大小) -->
+      <div id="target-zone" title="點我過關！"></div>
+    </div>
+
+    <!-- 結算彈窗 (預設隱藏) -->
+    <div id="result-overlay" class="hidden">
+      <div class="modal">
+        <h2>🎉 恭喜過關！ 🎉</h2>
+        <p>找真久~ 我都要睡著了😪 </p>
+        <button id="action-btn" onclick="nextStep()">解鎖最終驚喜 🎁</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let gameActive = true;
+
+    const gameStage = document.getElementById('game-stage');
+    const targetZone = document.getElementById('target-zone');
+    const overlay = document.getElementById('result-overlay');
+
+    // 1. 🎯 點中正確的水牛 -> 直接過關
+    targetZone.addEventListener('click', (event) => {
+      if (!gameActive) return;
+      
+      // 阻止點擊事件傳播到背景
+      event.stopPropagation(); 
+      
+      gameActive = false;
+      overlay.classList.remove('hidden'); // 顯示過關彈窗
+    });
+
+    // 2. 進入下一關或驚喜頁面
+    function nextStep() {
+      alert("正在傳送到生日大驚喜頁面...🎂");
+      // 這裡可以改成跳轉到你的最終驚喜網址
+      // window.location.href = "https://your-birthday-surprise-page.com";
+    }
+  </script>
+
+</body>
+</html>
