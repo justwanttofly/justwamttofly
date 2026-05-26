@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Jay!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+        @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+
+        body {
+            font-family: 'Indie Flower', cursive !important;
+            background: #FDE3A7; /*CAPE HONEY*/
+            margin: 0px;
+            padding: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        ::selection {
+            background: transparent;
+        }
+
+        h4 {
+            font-size: 26px;
+            line-height: 1px;
+            font-family: 'Amatic SC', cursive !important;
+        }
+
+        .color1 { color: #1BBC9B; } /*MOUNTAIN MEADOW*/
+        .color2 { color: #C0392B; } /*TALL POPPY*/
+
+        .card {
+            color: #013243; /*SHERPA BLUE*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 400px;
+            background: #e0e1dc;
+            transform-style: preserve-3d;
+            transform: translate(-50%,-50%) perspective(2000px);
+            box-shadow: inset 300px 0 50px rgba(0,0,0,.5), 20px 0 60px rgba(0,0,0,.5);
+            transition: 1s;
+        }
+
+        .card:hover {
+            transform: translate(-50%,-50%) perspective(2000px) rotate(0deg) scale(1.2);
+            box-shadow: inset 20px 0 50px rgba(0,0,0,.5), 0 10px 100px rgba(0,0,0,.5);
+        }
+
+        .card:before {
+            content:'';
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: #BAC1BA;
+            transform-origin: bottom;
+            transform: skewX(-45deg);
+        }
+
+        .card:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -5px;
+            width: 5px;
+            height: 100%;
+            background: #92A29C;
+            transform-origin: left;
+            transform: skewY(-45deg);
+        }
+
+        .card .imgBox {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-origin: left;
+            transition: .7s;
+            z-index: 1;
+        }
+
+        .card .bark {
+            position: absolute;
+            background: #e0e1dc;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: .7s;
+        }
+
+        .card .imgBox img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card:hover .imgBox {
+            transform: rotateY(-140deg);
+        }
+
+        .card:hover .bark {
+            opacity: 1;
+            transition: .6s;
+            box-shadow: 300px 200px 100px rgba(0, 0, 0, .4) inset;
+        }
+
+        /* ─── 以下為修正與新增的樣式 ─── */
+
+        .card .details {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 20px; /* 改為舒適的四周留白 */
+            z-index: 0;
+        }
+
+        .card .details h4 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .card .details p {
+            font-size: 13px; /* 微調字體大小以容納更多文字 */
+            line-height: 1.6 !important; /* 修正原本過窄的 5px 行高，改為健康的閱讀比例 */
+            margin: 0 0 4px 0;
+            padding: 0;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .next-p {
+            margin-top: 12px !important; /* 段落與段落之間的舒適間距 */
+        }
+
+        /* 分頁基本控制 */
+        .page-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            height: calc(100% - 40px); /* 扣除標題後的可用高度 */
+            position: relative;
+        }
+
+        /* 顯示中的頁面 */
+        .page-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* 按鈕容器：固定置於 details 的底部右側 */
+        .btn-container {
+            position: absolute;
+            bottom: 15px;
+            right: 0px;
+            text-align: right;
+        }
+
+        /* 文青手寫風翻頁按鈕 */
+        .nav-btn {
+            font-family: 'Indie Flower', cursive !important;
+            background: transparent;
+            border: 1px dashed #C0392B;
+            color: #C0392B;
+            padding: 3px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            margin-left: 5px;
+        }
+
+        .nav-btn:hover {
+            background: #C0392B;
+            color: #e0e1dc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="imgBox">
+        <div class="bark"></div>
+        <img src="https://i.postimg.cc/9MJfp1tc/wei-ming-ming-she-ji.png" alt="Card Cover">
+    </div>
+    
+    <div class="details">
+        <h4 class="color2 margin">HAPPY BIRTHDAY!</h4>
+        
+        <div class="page-content active" id="page1">
+            <p>To Jay,</p>
+            <p class="next-p">上大學後，我們好像又變得更少交</p>
+            <p>流了。彼此都有各自要忙的事情、</p>
+            <p>想走的方向，物理上的距離也比以</p>
+            <p>前更遙遠了一些。</p>
+            <p class="next-p">僅管現在已經很難像從前那樣，假</p>
+            <p>日還能偶爾一起去圖書館念書，或</p>
+            <p>跑去「我們在鋆庭那邊的家」聊天</p>
+            <p>、亂搞、消磨一整個下午。不過至</p>
+            <p>少現在寒暑假還有機會一起出去玩</p>
+            
+            <div class="btn-container">
+                <button class="nav-btn" onclick="switchPage(2)">下一頁 →</button>
+            </div>
+        </div>
+
+        <div class="page-content" id="page2">
+            <p class="next-p">，也謝謝你寒假陪我做了很多很有回憶</p>
+            <p>的事情——載我去海邊吹風踩沙、下雨</p>
+            <p>天跑去埔心農場看動物，還有大熱天</p>
+            <p>陪我去埤塘拍 vlog 素材。</p>
+            <p class="next-p">再過幾年後，我們就再也沒有寒暑假</p>
+            <p>了。想到這裡，又要再次感嘆時間</p>
+            <p>的稍縱即逝。</p>
+            <p class="next-p">不知道未來成為護理師之後，我們</p>
+            <p>是不是會變得更難聚在一起；又或者</p>
+            <p>某一天，我已經早早移民到澳洲，只</p>
+            <div class="btn-container">
+                <button class="nav-btn" onclick="switchPage(1)">← 上一頁</button>
+                <button class="nav-btn" onclick="switchPage(3)">下一頁 →</button>
+            </div>
+        </div>
+
+        <div class="page-content" id="page3">
+            <p>能隔著很遠的距離，看著還留在台灣</p>
+            <p>的你們。</p>
+            <p class="next-p">但你也不用太擔心啦，到時候我一</p>
+            <p>定還是會常常回台灣看你和鋆庭的。</p>
+            <p>當然，也順便提醒你——到時可別忘</p>
+            <p>了履行你答應請我去長灘島旅行的約定。</p>
+            <p class="next-p"></p>
+            <p>最後，提醒你趕快練英文，不然我怕</p>
+            <p>你輸得太早會走心😎</p>
+            
+            <p class="text-right">by Tricia</p>
+            
+            <div class="btn-container">
+                <button class="nav-btn" onclick="switchPage(2)">← 上一頁</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchPage(pageNum) {
+    const allPages = document.querySelectorAll('.page-content');
+    const targetPage = document.getElementById(`page${pageNum}`);
+    
+    // 找出目前顯示中的頁面
+    let currentPage = null;
+    allPages.forEach(page => {
+        if (page.classList.contains('active') || window.getComputedStyle(page).display === 'block') {
+            currentPage = page;
+        }
+    });
+
+    if (currentPage) {
+        // 1. 先將目前頁面淡出
+        currentPage.classList.remove('active');
+        
+        // 2. 待淡出動畫結束 (300ms) 後，隱藏舊頁面並準備新頁面
+        setTimeout(() => {
+            currentPage.style.display = 'none';
+            
+            // 3. 顯示目標頁面（此時透明度仍為 0）
+            targetPage.style.display = 'block';
+            
+            // 4. 稍微延遲讓瀏覽器渲染 display 後，加上 active 觸發淡入動畫
+            setTimeout(() => {
+                targetPage.classList.add('active');
+            }, 20);
+        }, 300);
+    } else {
+        // 防呆：如果沒有抓到當前頁面，直接顯示目標頁
+        targetPage.style.display = 'block';
+        targetPage.classList.add('active');
+    }
+}
+</script>
+
+</body>
+</html>
