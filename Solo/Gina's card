@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>給大GG的生日卡片與解謎 🎁</title>
+    <style>
+        /* ==========================================
+           全域與字體設定
+        ========================================== */
+        @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@552&display=swap");
+        @import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+        @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: #2c3e50; /* 預設使用具神祕感的深藍色背景 */
+            font-family: "Microsoft JhengHei", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* 區塊顯示控制 */
+        .page-section {
+            display: none !important;
+            width: 100%;
+            min-height: 100vh;
+            box-sizing: border-box;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page-section.active-section {
+            display: flex !important;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* 震動動畫 */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .shake {
+            animation: shake 0.2s ease-in-out 0s 2;
+        }
+
+        /* ==========================================
+           【首頁】樣式設定
+        ========================================== */
+        #section-home {
+            background: #f0f8ff;
+            font-family: "Caveat", sans-serif;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        #strings {
+            font-size: 8rem;
+            cursor: pointer;
+            animation: bounce 2s infinite ease-in-out;
+            transition: transform 0.3s;
+            margin: 0 0 20px 0;
+        }
+
+        #strings:hover {
+            transform: scale(1.1);
+        }
+
+        #letter {
+            background: white;
+            padding: 80px 60px;
+            border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+            max-width: 360px;
+            text-align: center;
+            border: 2px solid #ddd;
+            color: #333;
+        }
+
+        #game-btn {
+            margin-top: 20px;
+            padding: 10px 25px;
+            font-family: "Caveat", sans-serif;
+            font-size: 1.5rem;
+            background-color: #ffb6c1;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #game-btn:hover {
+            background-color: #ff99aa;
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #game-btn:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* ==========================================
+           【關卡通用】主容器樣式
+        ========================================== */
+        .game-container {
+            background: #34495e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            color: white;
+        }
+
+        .submit-btn, .next-btn, .action-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background: #27ae60;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .submit-btn:hover, .next-btn:hover, .action-btn:hover {
+            background: #2ecc71;
+        }
+
+        /* ==========================================
+           【第1關：偵探解謎】樣式
+        ========================================== */
+        .image-box img {
+            width: 100%;
+            border-radius: 10px;
+            border: 3px solid #f1c40f;
+            margin-bottom: 15px;
+        }
+
+        #show-hint-btn {
+            background: #95a5a6;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .hidden-hint {
+            display: none;
+            color: #f1c40f;
+            margin-top: 10px;
+        }
+
+        .input-section input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            width: 60%;
+            margin-bottom: 10px;
+        }
+
+        #message1, #message2 {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 1.2em;
+        }
+
+        #secretContent {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1c40f;
+            color: #2c3e50;
+            border-radius: 10px;
+        }
+
+        #nextLevelBtn1 {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #2c3e50;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* ==========================================
+           【第2關：寶可夢】樣式
+        ========================================== */
+        #section-level2 .game-container {
+            max-width: 400px;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.85em;
+            color: #bdc3c7;
+            letter-spacing: 1px;
+        }
+
+        .pk-image-box {
+            background: radial-gradient(circle, #ecf0f1 0%, #bdc3c7 100%);
+            border-radius: 12px;
+            border: 4px solid #f1c40f;
+            margin-bottom: 20px;
+            line-height: 0;
+            overflow: hidden;
+        }
+
+        .pk-image-box img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: contain;
+            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .silhouette {
+            filter: none;
+            transition: transform 0.3s ease;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .options-grid button {
+            padding: 14px;
+            border-radius: 8px;
+            border: none;
+            background: #27ae60;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .options-grid button:hover:not(:disabled) {
+            background: #2ecc71;
+            transform: translateY(-2px);
+        }
+
+        .options-grid button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .options-grid button.wrong {
+            background: #e74c3c !important;
+        }
+
+        .next-btn-pk {
+            background: #f39c12;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+
+        /* ==========================================
+           【第3關：尋找水牛】樣式
+        ========================================== */
+        #section-level3 .game-container {
+            max-width: 950px;
+        }
+
+        #game-stage {
+            position: relative;
+            width: 100%;
+            max-width: 850px;
+            aspect-ratio: 3 / 2;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: crosshair;
+            user-select: none;
+            margin: 0 auto;
+        }
+
+        #bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 🎯 水牛透明點擊區 */
+        #target-zone {
+            position: absolute;
+            top: 18.6%;
+            left: 77%;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            /* 🛠️ 測試時如果找不到，可以把下面的 transparent 改成 rgba(255, 0, 0, 0.4) 變成紅點測試 */
+            background: transparent; 
+            transition: transform 0.1s;
+            z-index: 10;
+        }
+
+        #result-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal {
+            background: #2c3e50;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: popUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: white;
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal button {
+            background: #2ed573;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* ==========================================
+           【最終關卡：Jay的生日卡片】樣式
+        ========================================== */
+        #section-card {
+            background: #FDE3A7; /* CAPE HONEY 黃色背景 */
+            font-family: 'Indie Flower', cursive !important;
+        }
+
+        ::selection { background: transparent; }
+
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            color: #013243; 
+            position: relative;
+            width: 300px;
+            height: 400px;
+            background: #e0e1dc;
+            transform-style: preserve-3d;
+            transform: perspective(2000px);
+            box-shadow: inset 300px 0 50px rgba(0,0,0,.5), 20px 0 60px rgba(0,0,0,.5);
+            transition: 1s;
+        }
+
+        .card:hover {
+            transform: perspective(2000px) rotate(0deg) scale(1.2);
+            box-shadow: inset 20px 0 50px rgba(0,0,0,.5), 0 10px 100px rgba(0,0,0,.5);
+        }
+
+        .card:before {
+            content:'';
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: #BAC1BA;
+            transform-origin: bottom;
+            transform: skewX(-45deg);
+        }
+
+        .card:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -5px;
+            width: 5px;
+            height: 100%;
+            background: #92A29C;
+            transform-origin: left;
+            transform: skewY(-45deg);
+        }
+
+        .card .imgBox {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-origin: left;
+            transition: .7s;
+            z-index: 2;
+        }
+
+        .card .bark {
+            position: absolute;
+            background: #e0e1dc;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: .7s;
+        }
+
+        .card .imgBox img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card:hover .imgBox {
+            transform: rotateY(-140deg);
+        }
+
+        .card:hover .bark {
+            opacity: 1;
+            transition: .6s;
+            box-shadow: 300px 200px 100px rgba(0, 0, 0, .4) inset;
+        }
+
+        .card .details {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 10px 20px;
+            z-index: 1;
+            background: #e0e1dc;
+        }
+
+        .card .details h4 {
+            font-size: 26px;
+            line-height: 1.2;
+            font-family: 'Amatic SC', cursive !important;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .color2 { color: #C0392B; }
+
+        .card .details p {
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 4px 0;
+            word-break: break-all;
+        }
+
+        .next-p {
+            margin-top: 10px !important;
+        }
+
+        .text-right {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 10px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <section id="section-home" class="page-section active-section">
+        <div id="container">
+            <p id="strings">🎂</p>
+            
+            <div id="letter" class="hidden">
+                <div class="envelope">
+                    <div class="content">
+                        <h3>前言 💩</h3>
+                        <p>1G 你好! 剛好大一蠻閒的 所以寫了這份網頁給你 <br>不過你要先闖完所有關卡才能<br>看到卡片內容。 嘿嘿 嘿 <br>甘巴爹٩( ˵ᐛ ˵)۶</p>
+                        <button id="game-btn">進入遊戲 🎮</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-level1" class="page-section">
+        <div class="game-container" id="card-l1">
+            <h2>🔍 第一關 : 偵探解謎</h2>
+            <p>觀察下方的圖片，找出隱藏的句子</p>
+
+            <div class="image-box">
+                <img src="https://i.postimg.cc/3W5nbsK3/jie-mi-su-cai.jpg" alt="Puzzle Image">
+            </div>
+
+            <div class="hint-section">
+                <button id="show-hint-btn" onclick="toggleHint()">顯示提示</button>
+                <p id="hintText" class="hidden-hint">提示：求我啊</p>
+            </div>
+
+            <div class="input-section">
+                <input type="text" id="passwordInput" placeholder="請輸入密碼..." maxlength="8">
+                <button class="submit-btn" onclick="checkPassword()">解鎖</button>
+            </div>
+
+            <p id="message1"></p>
+
+            <div id="secretContent" class="hidden">
+                <h3>🎉 恭喜闖關成功！</h3>
+                <button id="nextLevelBtn1" onclick="changePage('section-level2')">
+                    進入下一關 ➔
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-level2" class="page-section">
+        <div class="game-container" id="game-card-pk">
+            <div class="header-info">
+                <span id="level-text">第 1 / 3 題</span>
+                <span id="score-text">寶可夢大師評鑑-猜猜我是誰?</span>
+            </div>
+
+            <div class="pk-image-box">
+                <img id="pokemon-img" src="" alt="Pokemon" class="silhouette">
+            </div>
+
+            <div id="options-container" class="options-grid"></div>
+
+            <p id="message2"></p>
+
+            <div id="next-area" class="hidden">
+                <button class="next-btn next-btn-pk" onclick="nextQuestion()">進入下一題</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-level3" class="page-section">
+        <div class="game-container">
+            <h2>🎂 第三關：尋找1G 🐤</h2>
+            <p style="color: #bdc3c7; margin-bottom: 20px;">點擊藏在畫面裡、威利風格的1G(雞)</p>
+
+            <div id="game-stage">
+                <img src="https://i.postimg.cc/XNtgkBNz/jie-pou-xue.png" alt="水牛在哪裡" id="bg-image">
+                <div id="target-zone"></div>
+            </div>
+
+            <div id="result-overlay" class="hidden">
+                <div class="modal">
+                    <h2>🎉 恭喜過關！ 🎉</h2>
+                    <p>找真久~ 我都要睡著了😪 </p>
+                    <button class="action-btn" onclick="finishGame()">解鎖最終驚喜 🎁</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-card" class="page-section">
+        <div class="card-wrapper">
+            <div class="card">
+                <div class="imgBox">
+                    <div class="bark"></div>
+                    <img src="https://i.postimg.cc/j2qQLyRg/ying-mu-xie-qu-hua-mian-2026-05-26-232928.png" alt="卡片封面">
+                </div>
+                <div class="details">
+                    <h4 class="color2">HAPPY BIRTHDAY!</h4>
+                    <p>To Gina,</p>
+                    <p class="next-p">19歲生日快樂! 這網頁做的有點菜，但</p>
+                    <p>希望你玩得開心( ˙▿˙　)</p>
+                    <p class="next-p"></p>
+                    <p>上大學後，一個人獨處的時間就變好多</p>
+                    <p>也因為這樣子，真的就會像老師所說的</p>
+                    <p>很懷念高中時的生活，每天和你們膩在</p>
+                    <p>後座的白爛日常，但我們都登大人了，</p>
+                    <p>有各自的方向、目標要追尋，也很高興</p>
+                    <p>看到你持續精進自己的畫技，期待你能</p>
+                    <p>把興趣結合商業價值的一天(雖然這我</p>
+                    <p>好像提過蠻多次了  (〃ﾟ3ﾟ〃)  )</p>
+                    <p class="next-p"></p>
+                    <p>最後 我們暑假來約爬山好了🧗‍♂️</p>
+                   
+                    <p class="text-right">by Tricia</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- 核心換頁函式 ---
+        function changePage(targetSectionId) {
+            // 隱藏所有頁面
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            // 顯示目標頁面
+            const targetPage = document.getElementById(targetSectionId);
+            targetPage.classList.add('active-section');
+
+            // 如果進入第二關，初始化寶可夢關卡
+            if (targetSectionId === 'section-level2') {
+                initLevel();
+            }
+        }
+
+        // ==========================================
+        // 【首頁】邏輯
+        // ==========================================
+        const paragraph = document.getElementById("strings");
+        const letter = document.getElementById("letter");
+        const gameBtn = document.getElementById("game-btn");
+
+        const originalText = "🎂";
+        const hoverText = "Click it!"; 
+
+        paragraph.addEventListener("mouseenter", () => {
+            paragraph.textContent = hoverText;
+        });
+
+        paragraph.addEventListener("mouseleave", () => {
+            paragraph.textContent = originalText;
+        });
+
+        paragraph.addEventListener("click", () => {
+            paragraph.classList.add("hidden");
+            letter.classList.remove("hidden");
+        });
+
+        gameBtn.addEventListener("click", () => {
+            changePage('section-level1'); // 前往第一關
+        });
+
+
+        // ==========================================
+        // 【第1關：偵探解謎】邏輯
+        // ==========================================
+        function toggleHint() {
+            const hint = document.getElementById('hintText');
+            const btn = document.getElementById('show-hint-btn');
+
+            if (hint.style.display === "none" || hint.style.display === "") {
+                hint.style.display = "block";
+                btn.innerText = "隱藏提示";
+            } else {
+                hint.style.display = "none";
+                btn.innerText = "顯示提示";
+            }
+        }
+
+        function checkPassword() {
+            const userInput = document.getElementById('passwordInput').value.toUpperCase();
+            const message = document.getElementById('message1');
+            const secretContent = document.getElementById('secretContent');
+            const container = document.getElementById('card-l1');
+
+            const correctPassword = "GINAIBIG"; 
+
+            if (userInput === correctPassword) {
+                message.innerText = "✅ 唉喲! 牛逼! 密碼正確！";
+                message.style.color = "#2ecc71";
+                secretContent.classList.remove('hidden');
+            } else {
+                message.innerText = "❌ 密碼錯誤，好嫩喔！菜就多練!";
+                message.style.color = "#e74c3c";
+                secretContent.classList.add('hidden');
+                
+                container.classList.add('shake');
+                setTimeout(() => {
+                    container.classList.remove('shake');
+                }, 500);
+            }
+        }
+
+
+        // ==========================================
+        // 【第2關：寶可夢】邏輯
+        // ==========================================
+        const quizData = [
+            {
+                answer: "皮卡丘",
+                options: ["皮卡丘", "雷丘", "鯉魚王", "傑尼龜"],
+                silhouette: "https://i.postimg.cc/kGVyz8R5/Gemini-Generated-Image-464txg464txg464t.png",
+                revealed: "https://i.postimg.cc/xdMWGFVg/wei-ming-ming-she-ji.png"
+            },
+            {
+                answer: "卡比獸",
+                options: ["火焰鳥", "百變怪", "胖丁", "卡比獸"],
+                silhouette: "https://i.postimg.cc/FRVD9QhQ/Gemini-Generated-Image-2mla322mla322mla.png", 
+                revealed: "https://i.postimg.cc/Df5GQP6N/Gemini-Generated-Image-nupiuanupiuanupi.png"
+            },
+            {
+                answer: "傑尼龜",
+                options: ["卡比獸", "傑尼龜", "噴火龍", "喵喵"],
+                silhouette: "https://i.postimg.cc/ydpnJy3b/Gemini-Generated-Image-9c9hz69c9hz69c9h.png", 
+                revealed: "https://i.postimg.cc/rp89QPSH/Gemini-Generated-Image-k6zpfk6zpfk6zpfk.png"
+            }
+        ];
+
+        let currentIdx = 0;
+        let canClick = true;
+
+        function initLevel() {
+            canClick = true;
+            const currentQuiz = quizData[currentIdx];
+
+            document.getElementById('level-text').innerText = `第 ${currentIdx + 1} / ${quizData.length} 題`;
+            document.getElementById('message2').innerText = "";
+            
+            const img = document.getElementById('pokemon-img');
+            img.src = currentQuiz.silhouette;
+            img.className = 'silhouette';
+            
+            document.getElementById('next-area').classList.add('hidden');
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = "";
+            currentQuiz.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswerPK(opt, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswerPK(selected, btnElement) {
+            if (!canClick) return;
+
+            const currentQuiz = quizData[currentIdx];
+            const msg = document.getElementById('message2');
+            const img = document.getElementById('pokemon-img');
+
+            if (selected === currentQuiz.answer) {
+                canClick = false;
+                img.src = currentQuiz.revealed;
+                img.className = 'revealed';
+                
+                msg.innerText = "✅ 唉喲！賽到的吧！";
+                msg.style.color = "#2ecc71";
+                
+                document.getElementById('next-area').classList.remove('hidden');
+                document.querySelectorAll('#options-container button').forEach(b => b.disabled = true);
+            } else {
+                msg.innerText = "❌ 答錯了，寶可夢玩假的！";
+                msg.style.color = "#e74c3c";
+                btnElement.classList.add('wrong');
+                btnElement.disabled = true;
+                
+                const card = document.getElementById('game-card-pk');
+                card.classList.add('shake');
+                setTimeout(() => card.classList.remove('shake'), 400);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentIdx < quizData.length - 1) {
+                currentIdx++;
+                initLevel();
+            } else {
+                // 第二關完成，直接切換到第三關
+                changePage('section-level3');
+            }
+        }
+
+
+        // ==========================================
+        // 【第3關：尋找水牛】邏輯
+        // ==========================================
+        let gameActive = true;
+        const targetZone = document.getElementById('target-zone');
+        const overlay = document.getElementById('result-overlay');
+
+        targetZone.addEventListener('click', (event) => {
+            if (!gameActive) return;
+            event.stopPropagation(); 
+            gameActive = false;
+            overlay.classList.remove('hidden'); // 顯示破關談窗
+        });
+
+        function finishGame() {
+            alert("正在傳送到生日大驚喜頁面...🎂");
+            overlay.classList.add('hidden');
+            changePage('section-card'); // 前往最終卡片頁面
+        }
+    </script>
+</body>
+</html>
