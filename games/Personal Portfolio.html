@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Creator | 魚魚</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
+    /* ==========================================
+       1. 全域變數與基礎設定 (Variables & Reset)
+       ========================================== */
     :root {
-      --primary: #ffdd57;
-      --dark: #1a1a1a;
-      --light: #f5f5f5;
+      --primary: #ffdd57;  /* 主題金黃色（焦點、超連結、強調線） */
+      --dark: #1a1a1a;     /* 網頁主背景暗灰色，柔和不刺眼 */
+      --light: #f5f5f5;    /* 主要文字白色 */
+      --text-muted: #ccc;  /* 次要文字白灰色 */
     }
 
     body {
@@ -19,17 +25,22 @@
       color: var(--light);
       font-family: 'Inter', sans-serif;
       margin: 0;
-      overflow-x: hidden;
+      overflow-x: hidden; /* 防止手機版出現左右不正常滾動條 */
     }
 
+
+    /* ==========================================
+       2. 導覽列樣式 (Navigation Bar)
+       ========================================== */
     nav {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-between; /* 讓 Logo 與連結分居左右兩側 */
+      align-items: center;
       padding: 20px 5%;
-      background: rgba(0,0,0,0.9);
-      position: sticky;
+      background: rgba(0, 0, 0, 0.9); /* 微透明黑色背景 */
+      position: sticky;                /* 滾動時固定在頂部 */
       top: 0;
-      z-index: 10;
+      z-index: 10;                     /* 確保導覽列永遠在最上層 */
     }
 
     .logo { 
@@ -37,62 +48,77 @@
       letter-spacing: 2px; 
       color: var(--primary); 
     }
-    
+
     .links a { 
       color: white; 
-      text-decoration: none; 
+      text-decoration: none;          /* 移除超連結下劃線 */
       margin-left: 20px; 
       font-size: 0.9rem; 
+      transition: color 0.2s ease;
     }
 
+    /* 滑鼠懸停在導覽連結時變金色 */
+    .links a:hover {
+      color: var(--primary);
+    }
+
+
+    /* ==========================================
+       3. 主要內容版面控制 (Main Layout)
+       ========================================== */
     main { 
       padding: 40px 5%; 
-      max-width: 1000px; 
-      margin: auto; 
+      max-width: 1000px; /* 限制網頁最大寬度，在寬螢幕下不會過度拉伸 */
+      margin: auto;      /* 置中對齊 */
     }
 
     .section-title {
       text-align: center;
-      margin: 60px 0 30px;
+      margin: 80px 0 40px; /* 拉大上下間距，讓各區塊視覺上有呼吸空間 */
       font-size: 1.5rem;
       text-transform: uppercase;
       letter-spacing: 4px;
     }
 
-    /* 認識我區塊的文字排版 */
+
+    /* ==========================================
+       4. 「認識我」區塊 (About Me Section)
+       ========================================== */
     .about-container {
-      max-width: 650px;       /* 限制文字最大寬度，閱讀起來最舒服 */
-      margin: 0 auto;         /* 讓整個文字區塊置中 */
-      text-align: center;      /* 文字置中對齊 */
-      line-height: 1.8;        /* 加大行高，提升易讀性 */
+      max-width: 650px;   /* 限制文字行寬，提升閱讀舒適度 */
+      margin: 0 auto;      /* 區塊置中 */
+      text-align: center; /* 文字置中 */
+      line-height: 1.8;   /* 舒適的行高 */
       padding: 20px;
     }
 
     .about-lead {
-      font-size: 1.3rem;      /* 第一句招呼語放大 */
-      color: var(--primary);  /* 使用你的主題金黃色 */
+      font-size: 1.3rem;  /* 大字號開場白 */
+      color: var(--primary);
       font-weight: 700;
       margin-bottom: 25px;
     }
 
     .about-text {
       font-size: 1rem;
-      color: #ccc;            /* 稍微柔和的白灰色，看久眼睛不酸 */
+      color: var(--text-muted);
       margin-bottom: 15px;
     }
 
+    /* 重點文字特別標註（底線效果） */
     .about-text strong {
-      color: #fff;            /* 讓技能關鍵字變白、變粗 */
-      border-bottom: 2px solid var(--primary); /* 在 DaVinci Resolve 下方加上金黃色底線強烈吸睛 */
+      color: #fff;
+      border-bottom: 2px solid var(--primary); /* DaVinci Resolve 下方的金黃底線 */
       padding-bottom: 2px;
     }
 
+    /* 底部呼籲聯絡的 Highlight 框 */
     .about-highlight {
       margin-top: 30px;
-      background: rgba(255, 221, 87, 0.1);
+      background: rgba(255, 221, 87, 0.1); /* 10% 透明度的金色背景 */
       padding: 20px;
       border-radius: 8px;
-      border-left: 4px solid var(--primary);
+      border-left: 4px solid var(--primary); /* 左側粗金線，增加視覺設計感 */
       text-align: center;
     }
 
@@ -100,175 +126,221 @@
       font-size: 1.1rem;
       color: #fff;
       font-weight: 600;
-      margin: 0 0 10px 0; /* 留 10px 空隙給下方的 Email */
+      margin: 0 0 10px 0;
     }
 
     .highlight-email {
       font-size: 1rem;
-      color: var(--primary); /* 讓 Email 變成金黃色焦點 */
-      text-decoration: none; /* 拔掉超連結預設底線 */
+      color: var(--primary);
+      text-decoration: none;
       font-weight: 500;
       display: inline-block;
       transition: opacity 0.2s;
     }
 
-    /* 滑鼠移過去 Email 時會有微亮效果 */
     .highlight-email:hover {
-      opacity: 0.8;
+      opacity: 0.8; /* 滑鼠移入時微透，呈現按鈕回饋感 */
     }
 
-    /* 影片區塊的網格排版，會自動根據螢幕大小配置 */
-    .video-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      align-items: center;
-    }
 
-    /* 當螢幕較寬(電腦版)時，讓長短片可以並排或更美觀地呈現 */
-    @media (min-width: 768px) {
-      .video-grid {
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
-      }
-      .card {
-        flex: 1;
-        max-width: 560px; /* 橫片最大寬度 */
-      }
-      .card.short-video-card {
-        max-width: 300px; /* 短影音電腦上不宜太寬，限制在 300px 左右最漂亮 */
-      }
-    }
-
-    /* 原有的橫版影片響應式 (16:9) */
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%; /* 9 / 16 = 0.5625 */
-      height: 0;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-    }
-
-    /* 新增：直版短影音響應式 (9:16) */
-    .video-wrapper-short {
-      position: relative;
-      padding-bottom: 177.77%; /* 16 / 9 = 1.7777 */
-      height: 0;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .video-wrapper-short iframe {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-    }
-
+    /* ==========================================
+       5. 影片作品區塊 - 通用卡片 (Video Cards)
+       ========================================== */
     .card-info h3 {
       font-size: 1rem;
-      margin-top: 15px;
-      text-align: center;
-      color: #fff;
+      margin-top: 12px;
+      margin-bottom: 25px;
+      font-weight: 600;
+      color: var(--light);
+      text-align: center; /* 標題置中 */
     }
 
-    /* 1. 控制外層容器：負責「置中」與「寬度」 */
+
+    /* ==========================================
+       5-1. 橫版長影片 (16:9 - YouTube)
+       ========================================== */
+    .long-video-container {
+      max-width: 800px; /* 電腦版限制橫片寬度，避免過大 */
+      margin: 0 auto 50px auto; /* 置中，並與下方短片區隔 */
+      width: 100%;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 完美的 16:9 比例 (9 / 16 = 56.25%) */
+      height: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* 卡片質感陰影 */
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%;
+      border: none;
+    }
+
+
+    /* ==========================================
+       5-2. 直版短影音 (9:16 - YouTube Shorts)
+       ========================================== */
+    .short-video-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* 手機版預設：單一欄位垂直排列 */
+      gap: 30px;                  /* 卡片間的間距 */
+      justify-items: center;      /* 卡片在網格中水平置中 */
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .card.short-video-card {
+      width: 100%;
+      max-width: 280px; /* 限制直式影片卡片最大寬度，保持修長比例 */
+    }
+
+    .video-wrapper-short {
+      position: relative;
+      padding-bottom: 177.77%; /* 完美的 9:16 比例 (16 / 9 = 177.77%) */
+      height: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .video-wrapper-short iframe {
+      position: absolute;
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%;
+      border: none;
+    }
+
+
+    /* ==========================================
+       6. 照片拍攝區塊 (Photo Section)
+       ========================================== */
+    /* 控制外層容器：負責置中與寬度限制 */
     #photo .image {
-      max-width: 800px;  /* 這裡可以調整你想要的照片最大寬度 */
-      width: 80%;        /* 在手機版時，佔螢幕寬度的 80% */
-      margin: 0 auto;    /* 關鍵：左右自動留白，達成「置中」效果 */
+      max-width: 800px;  /* 網頁上照片的最大寬度 */
+      width: 85%;        /* 手機版時佔螢幕寬度的 85% */
+      margin: 0 auto;    /* 關鍵：自動左右留白，達成置中 */
     }
 
-    /* 2. 控制裡面的照片：負責「圓角」與「比例限制」 */
+    /* 控制照片本身：圓角、自適應與防止變形 */
     #photo .image img {
-      width: 100%;       /* 讓照片寬度填滿上面的外層容器 */
-      max-height: 70vh;  /* 新增：限制照片最高不超過螢幕高度的 70%，避免直式照片太長超標 */
-      object-fit: cover; /* 新增：如果超過比例會自動裁切，絕對不變形 */
-      height: auto;      /* 保持原始比例 */
-      display: block;    /* 消除圖片下方微小的網頁間隙 */
-      border-radius: 16px; /* 調整圓角大小 */
+      width: 100%;       /* 填滿外層容器 */
+      max-height: 70vh;  /* 限制最高不超過螢幕高度的 70%，防止直照片過長 */
+      object-fit: cover; /* 超過限制比例時自動微裁切，絕對不壓縮變形 */
+      height: auto;      /* 保持比例 */
+      display: block;    /* 消除圖片下方底部的微小縫隙 */
+      border-radius: 16px; /* 圓角效果 */
+    }
+
+
+    /* ==========================================
+       7. 響應式網頁設計 - 電腦與平板 (RWD)
+       ========================================== */
+    @media (min-width: 768px) {
+      /* 當螢幕寬度大於 768px (進入平板/電腦版) */
+      
+      .short-video-grid {
+        /* 自動將直式短影音平分成 3 欄並排 */
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 20px; /* 電腦版卡片間距微調，畫面更緊湊精美 */
+      }
     }
   </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo">Student Creator | 魚魚 </div>
-  <div class="links">
-    <a href="#about me"> About Me | 認識我</a>
-    <a href="#video"> Video | 剪輯作品</a>
-    <a href="#photo"> Photo | 拍攝</a>
-</div>
-</nav>
+  <nav>
+    <div class="logo">Student Creator | 魚魚</div>
+    <div class="links">
+      <a href="#about me">About Me | 認識我</a>
+      <a href="#video">Video | 剪輯作品</a>
+      <a href="#photo">Photo | 拍攝</a>
+      </div>
+  </nav>
 
-<main>
-  <section id="about me">
-    <h2 class="section-title">About Me | 認識我</h2>
-    
-    <div class="about-container">
-      <p class="about-lead">哈囉！我是魚魚，一名影像自由接案人。</p>
-      <p class="about-text">
-        我熱愛學習新科技，連你現在看到的網頁，也是我透過 AI 自學一手架設的！
-      </p>
-      <p class="about-text">
-        我擅長 <strong>DaVinci Resolve</strong> 剪輯、調色、配樂、音效與字幕製作，能一手包辦完整的後期流程。
-      </p>
+  <main>
+    <section id="about me">
+      <h2 class="section-title">About Me | 認識我</h2>
       
-      <div class="about-highlight">
-        <p class="highlight-title">無論是各類影像協作或長期合作，都歡迎隨時私訊洽詢！</p>
-        <a href="mailto:baoshilaimu@gmail.com" class="highlight-email">📬 Email: baoshilaimu@gmail.com</a>
-      </div>
-    </div>
-  </section>
-  
-  <section id="video">
-    <h2 class="section-title">Video | 剪輯作品</h2>
-    <div class="video-grid">
-      <div class="card">
-        <div class="video-wrapper">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/W4YiSPB3aNM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <div class="about-container">
+        <p class="about-lead">哈囉！我是魚魚，一名影像自由接案人。</p>
+        <p class="about-text">
+          我熱愛學習新科技，連你現在看到的網頁，也是我透過 AI 自學一手架設的！
+        </p>
+        <p class="about-text">
+          我擅長 <strong>DaVinci Resolve、CapCut</strong> 剪輯、調色、配樂、音效與字幕製作，能一手包辦完整的後期流程。
+        </p>
+        <div class="about-highlight">
+          <p class="highlight-title">無論是各類影像協作或長期合作，都歡迎隨時私訊洽詢！</p>
+          <a href="mailto:baoshilaimu@gmail.com" class="highlight-email">📬 Email: baoshilaimu@gmail.com</a>
         </div>
-        <div class="card-info">
-          <h3>兒童教育動畫</h3>
-        </div>
-      </div>
-
-      <div class="card short-video-card">
-        <div class="video-wrapper-short">
-          <iframe width="315" height="560" src="https://www.youtube.com/embed/w_u7-LMS6vw" title="YouTube Shorts player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="card-info">
-          <h3>短影音剪輯與Davinci調色</h3>
-        </div>
-      </div>
-
-      <div class="card short-video-card">
-        <div class="video-wrapper-short">
-          <iframe width="315" height="560" src="https://www.youtube.com/embed/Fvi_hpqWvSQ" title="YouTube Shorts player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="card-info">
-          <h3>短影音剪輯與字幕製作</h3>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="photo">
-    <h2 class="section-title">Photo | 拍攝</h2>
-    <div class="image">
-      <img src="https://i.postimg.cc/6Q5TVdh7/1775653366375.jpg" alt="Sea Image">
-    </div>
+      </div> </section>
     
-    <div class="image" style="margin-top: 20px;"> 
-      <img src="https://i.postimg.cc/TPYhjrcL/1775653366215.jpg" alt="Sea Image2">
-    </div>
-  </section>
+    <section id="video">
+      <h2 class="section-title">Video | 剪輯作品</h2>
+      
+      <div class="long-video-container">
+        <div class="card">
+          <div class="video-wrapper">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/W4YiSPB3aNM?si=SW7oj12k6wwOhjX3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="card-info">
+            <h3>兒童教育動畫</h3>
+          </div>
+        </div>
+      </div>
 
-</main>
+      <div class="short-video-grid">
+        <div class="card short-video-card">
+          <div class="video-wrapper-short">
+            <iframe width="315" height="560" src="https://youtube.com/embed/w_u7-LMS6vw?si=ug-_841cTkzEhGbI" title="YouTube Shorts player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="card-info">
+            <h3>短影音剪輯與Davinci調色</h3>
+          </div>
+        </div>
+
+        <div class="card short-video-card">
+          <div class="video-wrapper-short">
+            <iframe width="315" height="560" src="https://youtube.com/embed/Fvi_hpqWvSQ?si=-udAUF171Y2SzwGY" title="YouTube Shorts player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="card-info">
+            <h3>短影音剪輯與字幕製作</h3>
+          </div>
+        </div>
+
+        <div class="card short-video-card">
+          <div class="video-wrapper-short">
+            <iframe width="315" height="560" src="https://youtube.com/embed/AL5KZIZVNBo?si=OKX4BZCSom5CG_u0" title="YouTube Shorts player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="card-info">
+            <h3>國外脫口秀翻譯剪輯</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="photo">
+      <h2 class="section-title">Photo | 拍攝</h2>
+      <div class="image">
+        <img src="https://i.postimg.cc/6Q5TVdh7/1775653366375.jpg" alt="Sea Image">
+      </div>
+      
+      <div class="image" style="margin-top: 20px;"> 
+        <img src="https://i.postimg.cc/TPYhjrcL/1775653366215.jpg" alt="Sea Image2">
+      </div>
+    </section>
+
+    </main>
 
 </body>
 </html>
